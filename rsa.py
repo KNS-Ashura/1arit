@@ -78,26 +78,46 @@ class Chiffreur:
                     
         return message_chiffrer
     
-    def déchiffrer(self):
-        pass  
-        
-
+    def dechiffrer(self,message_chiffrer):
+        message_chiffrer = list(message_chiffrer)
+        message_dechiffrer = []
+        self.__keyright = self.__start_keyright
+        self.__keyleft = self.__start_keyleft
+        for i in range(len(self.__message)):
+            for j in range(len(self.__keyleft)):
+                if self.__keyleft[j] == message_chiffrer[i]:
                     
+                    #modifications de keyleft :
                     
+                    #récupérer l'index
+                    index = j
+
+                    message_dechiffrer.append(self.__keyright[index])
                     
+                    #inverser la liste
+                    dernier = self.__keyleft[index:]
+                    reste = self.__keyleft[:index]
+                    self.__keyleft = dernier + reste
                     
+                    #enlever l'élément et le remmetre en 13ieme position
+                    element = self.__keyleft.pop(1)
+                    self.__keyleft.insert(13,element)
+                    element = []
+
+                    #modifications de keyright pour faire un autre tour de boucle :
+
+                    #permutation circulaire
+                    dernier = self.__keyright[index+1:]
+                    reste = self.__keyright[:index]
+                    self.__keyright = dernier + reste + [self.__keyright[index]]
+
+                    #décallage des elements
+                    element = self.__keyright.pop(2)
+                    self.__keyright.insert(13,element)
+                    element = []
+                    break
                     
-
-                    
-                    
-
-
-
-
-
-    
-    def dechiffrer():
-        pass
+        return message_dechiffrer
     
 
 #création d'un objet pour utiliser la classe
@@ -108,4 +128,4 @@ chiffreur = Chiffreur("SWAY", #message
                       start_keyleft="OAJTFYLQXCMPEDNVSBRUKHGWIZ", 
                       start_keyright="EWKFTYIQXUHPMABCNJRLDZSGVO")
 
-chiffreur.chiffrer()
+print(chiffreur.dechiffrer("GOPJ"))
