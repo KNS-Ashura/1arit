@@ -1,6 +1,4 @@
-import math
-
-class Chiffreur:
+class Algo1:
     def __init__ (self,keyright,keyleft,start_keyleft,start_keyright): #initialise les valeures necessaires
         self.__keyleft = keyleft
         self.__keyright = keyright
@@ -98,10 +96,25 @@ class Chiffreur:
 
 #création d'un objet pour utiliser la classe
 
-chiffreur = Chiffreur(keyright=[],
-                      keyleft=[],
-                      start_keyleft="QWERTYUIOPASDFGHJKLZXCVBNM", 
-                      start_keyright="MNBVCXZLKJHGFDSAPOIUYTREWQ")
+#chiffreur = Algo1(keyright=[], keyleft=[], start_keyleft="QWERTYUIOPASDFGHJKLZXCVBNM", start_keyright="MNBVCXZLKJHGFDSAPOIUYTREWQ")
 
-print(chiffreur.dechiffrer("QVCLPLBGUNKYLAOLSJJRONAODIZQAMKYGT"))
-print(chiffreur.chiffrer("MEET ME AT MIDNIGHT BY THE OLD CLOCK TOWER"))
+#print(chiffreur.dechiffrer("QVCLPLBGUNKYLAOLSJJRONAODIZQAMKYGT"))
+#print(chiffreur.chiffrer("MEET ME AT MIDNIGHT BY THE OLD CLOCK TOWER"))
+
+
+class Algo2:
+    def __init__ (self, n, offset):
+        self.__n = n
+        self.__offset = offset
+        self.__erreur = "Erreur : l'offset doit être compris entre 0 et 2*n - 3"
+
+    def verif(self):
+        if self.__offeset < 0 and self.__offset > 2*self.__n - 3:
+            return False
+        return True
+    def chiffrer(self,message):
+        if self.verif() == True:
+            message = list(message)
+            
+        else:
+            return self.__erreur
