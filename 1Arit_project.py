@@ -100,8 +100,8 @@ class Chiffreur:
 
 chiffreur = Chiffreur(keyright=[],
                       keyleft=[],
-                      start_keyleft="OAJTFYLQXCMPEDNVSBRUKHGWIZ", 
-                      start_keyright="EWKFTYIQXUHPMABCNJRLDZSGVO")
+                      start_keyleft="QWERTYUIOPASDFGHJKLZXCVBNM", 
+                      start_keyright="MNBVCXZLKJHGFDSAPOIUYTREWQ")
 
-print(chiffreur.dechiffrer("GOPJ"))
-print(chiffreur.chiffrer("SWAY"))
+print(chiffreur.dechiffrer("QVCLPLBGUNKYLAOLSJJRONAODIZQAMKYGT"))
+print(chiffreur.chiffrer("MEET ME AT MIDNIGHT BY THE OLD CLOCK TOWER"))
