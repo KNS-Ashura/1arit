@@ -6,30 +6,6 @@ class Chiffreur:
         self.__keyright = keyright
         self.__start_keyright = list(start_keyright)
         self.__start_keyleft = list(start_keyleft)
-
-        
-    #getteurs et setteurs
-    
-    def set_keyright(self,new_value):
-        self.__keyright = new_value
-    
-    def get_keyright(self):
-        return self.__keyright
-        
-    def set_keyleft(self,new_value):
-        self.__keyleft = new_value
-    
-    def get_keyleft(self):
-        return self.__keyleft
-    
-    def get_start_keyright(self):
-        return self.__start_keyright
-    
-    def get_start_keyleft(self):
-        return self.__start_keyleft
-    
-    def get_message(self):
-        return self.__message
     
     #fonctions intermedieraires
     
