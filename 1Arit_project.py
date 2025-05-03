@@ -103,19 +103,24 @@ class Algo1:
 
 
 class Algo2:
-    def __init__ (self, n, offset):
+    def __init__ (self, n, offset, len):
         self.__n = n
         self.__offset = offset
         self.__error = f"Erreur : l'offset doit être compris entre 0 et {2*self.__n - 3}"
+        self.__message_len = len
 
     #vérification de l'offset pour quand on essaye avec un n et un offest différent du sujet
     def verif(self):
         if self.__offset < 0 or self.__offset > 2*self.__n - 3:
             return False
         return True
+    
     def chiffrer(self,message):
         if self.verif() == False:
             return self.__error
+        
+        #recuperation de la longueur du message pour affichage des vagues
+        self.__message_len = len(list(message)) 
 
         #préparation du message
         message = message.replace(" ", "")
@@ -156,7 +161,24 @@ class Algo2:
                 message_chiffrer.append(lignes[i][j])
 
         return ''.join(message_chiffrer)
+    
+    def vagues(self):
+        display_board = []
+        display_ligne = []
+
+        for i in range(self.__message_len):
+            display_ligne.append(0)
+            
+        for j in range(self.__n):
+            display_board.append(display_ligne)
         
-chiffreur2 = Algo2(n=6, offset=4)
+        for k in range(len(display_board)):
+            print
+            
+                
+        
+        
+chiffreur2 = Algo2(n=6, offset=4,len=0)
 print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
+print(chiffreur2.vagues())
 # on est censé obtenir "ETTPUVPOYHUYOEUFAAEODYREIDTKUNDDWKNABORIIADRM"
