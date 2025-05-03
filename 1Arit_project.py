@@ -103,50 +103,38 @@ class Algo1:
 
 
 class Algo2:
-    def __init__ (self, n, offset, len):
+    def __init__(self, n, offset, len):
         self.__n = n
         self.__offset = offset
         self.__error = f"Erreur : l'offset doit être compris entre 0 et {2*self.__n - 3}"
         self.__message_len = len
+        self.__lignes = []  # ajout pour stocker les lignes
 
-    #vérification de l'offset pour quand on essaye avec un n et un offest différent du sujet
     def verif(self):
         if self.__offset < 0 or self.__offset > 2*self.__n - 3:
             return False
         return True
     
-    def chiffrer(self,message):
-        if self.verif() == False:
+    def chiffrer(self, message):
+        if not self.verif():
             return self.__error
-        
-        #recuperation de la longueur du message pour affichage des vagues
-        self.__message_len = len(list(message)) 
 
-        #préparation du message
-        message = message.replace(" ", "")
-        message = message.upper()
+        message = message.replace(" ", "").upper()
+        self.__message_len = len(message)
 
-        #cycle de vague
         cycle = 2 * self.__n - 2
+        self.__lignes = [[] for _ in range(self.__n)]
 
-        #création des lignes
-        lignes = []
-        for i in range(self.__n):
-            lignes.append([])
-
-        #choix de la ligne de départ
         if self.__offset < self.__n:
             ligne_actuelle = self.__offset
-            direction = 1 #descente
+            direction = 1
         else:
             ligne_actuelle = cycle - self.__offset
-            direction = -1 #remontée
+            direction = -1
 
-        #remplissage d'une ligne
         for i in range(len(message)):
-            lignes[ligne_actuelle].append(message[i])
+            self.__lignes[ligne_actuelle].append((i, message[i]))  # stocker position + lettre
 
-            #chagement de direction si on touche les bords
             if ligne_actuelle == 0:
                 direction = 1
             elif ligne_actuelle == self.__n - 1:
@@ -154,31 +142,33 @@ class Algo2:
             
             ligne_actuelle += direction
 
-        #collage des lignes
         message_chiffrer = []
-        for i in range(len(lignes)):
-            for j in range(len(lignes[i])):
-                message_chiffrer.append(lignes[i][j])
+        for ligne in self.__lignes:
+            for pos, lettre in ligne:
+                message_chiffrer.append(lettre)
 
         return ''.join(message_chiffrer)
     
+    
+    
     def vagues(self):
-        display_board = []
-        display_ligne = []
+        # Initialiser grille d'espaces
+        display_board = [[' ' for _ in range(self.__message_len)] for _ in range(self.__n)]
 
-        for i in range(self.__message_len):
-            display_ligne.append(0)
-            
-        for j in range(self.__n):
-            display_board.append(display_ligne)
-        
-        for k in range(len(display_board)):
-            print
+        # Remplir grille avec les lettres aux bonnes positions
+        for i in range(self.__n):
+            for pos, lettre in self.__lignes[i]:
+                display_board[i][pos] = lettre
+
+        # Affichage
+        for ligne in display_board:
+            print(''.join(ligne))
+
             
                 
         
         
-chiffreur2 = Algo2(n=6, offset=4,len=0)
-print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
-print(chiffreur2.vagues())
-# on est censé obtenir "ETTPUVPOYHUYOEUFAAEODYREIDTKUNDDWKNABORIIADRM"
+chiffreur2 = Algo2(n=6, offset=4, len=0)
+res = chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND")
+print(res)
+chiffreur2.vagues()
