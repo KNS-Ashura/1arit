@@ -57,7 +57,7 @@ class Algo1:
                     self.move_element(2,self.__keyright)
                     break
                     
-        return message_chiffrer
+        return "".join(message_chiffrer)
     
     def dechiffrer(self,message_chiffrer):
         message_chiffrer = list(message_chiffrer)
@@ -91,7 +91,7 @@ class Algo1:
                     self.move_element(2,self.__keyright)
                     break
                     
-        return message_dechiffrer
+        return "". join(message_dechiffrer)
     
 
 #création d'un objet pour utiliser la classe
@@ -146,9 +146,12 @@ class Algo2:
         
         tableau = self.creer_tableau(self.__n, len(message))
         
-        ligne_actuelle = self.__offset
-        
-        direction = 1
+        if self.__offset < self.__n:
+            ligne_actuelle = self.__offset
+            direction = 1 #descente
+        else:
+            ligne_actuelle = 2 * self.__n - 2 - self.__offset
+            direction = -1 #remontée
         
         #création du tableau
         for i in range(len(message)):
@@ -169,15 +172,74 @@ class Algo2:
                 if tableau[i][j] != 0:
                     message_chiffrer.append(tableau[i][j])
         
-        return message_chiffrer
-                
-            
+        return "".join(message_chiffrer)
     
+#/////////////////////////////////////////////////
 
+   
+    def dechiffrer(self, message_chiffre):
+        
+        #transformation en liste
+        message_chiffre = list(message_chiffre)
+        
+        if self.verif() is False :
+            return self.__error 
+        
+        #calcul de la longueur nécessaire pour le tableau
+        #on doit déterminer combien de colonnes seraient nécessaires pour le message original
+        
+        positions = []
+        longueur_colonne = 0
+        
+        if self.__offset < self.__n:
+            ligne_actuelle = self.__offset
+            direction = 1 #descente
+        else:
+            ligne_actuelle = 2 * self.__n - 2 - self.__offset
+            direction = -1 #remontée
             
-                
+        #simulation du parcours pour déterminer les positions
+        while longueur_colonne < len(message_chiffre):
+            positions.append((ligne_actuelle, longueur_colonne))
+            longueur_colonne += 1
+            
+            if ligne_actuelle == 0:
+                direction = 1
+            if ligne_actuelle == self.__n - 1:
+                direction = -1
+            ligne_actuelle += direction
+        
+        #création du tableau vide
+        tableau = self.creer_tableau(self.__n, longueur_colonne)
+        
+        #remplissage du tableau avec le message chiffré
+        indice_message = 0
+        for i in range(len(tableau)):
+            for j in range(len(tableau[i])):
+                for position in positions:
+                    if position == (i, j):
+                        if indice_message < len(message_chiffre):
+                            tableau[i][j] = message_chiffre[indice_message]
+                            indice_message += 1
+        
+        #appelle de la fonction d'affichage
+        self.vagues(tableau)
+        
+        #lecture du message original en suivant les colonnes
+        message_original = []
+        for j in range(len(tableau[0])):
+            for i in range(len(tableau)):
+                if tableau[i][j] != 0:
+                    message_original.append(tableau[i][j])
+        
+        return "".join(message_original)
+            
+        
+
         
         
-chiffreur2 = Algo2(n=6, offset=4)
-print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
+chiffreur2 = Algo2(n=7, offset=8)
+#print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
 # on doit obtenir "ETTPUVPOYHUYOEUFAAEODYREIDTKUNDDWKNABORIIADRM"
+print(chiffreur2.dechiffrer("HANHARYMTPTLAYNCIPSITTITNOWRIOEFHOAEALOWIDIIGTNOSATTNSDOATNSSOEGSHLEFTTAMTODAGGITHSGTIDYTGEETSSSTETMOILJINNWGSNIEEISNAISTKNUELIYSYENNAUAAEILGYLTMUGNMUOASOGRNBTENMGNSWFIRBAJIJMEIGHIOTR"))
+# on doit obtenir "DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"
