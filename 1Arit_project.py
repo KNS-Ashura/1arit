@@ -106,15 +106,55 @@ class Algo2:
     def __init__ (self, n, offset):
         self.__n = n
         self.__offset = offset
-        self.__erreur = "Erreur : l'offset doit être compris entre 0 et 2*n - 3"
+        self.__error_msg = f"Erreur : l'offset doit être compris entre 0 et {2*self.__n - 3}"
 
+    #vérification de l'offset pour quand on essaye avec un n et un offest différent du sujet
     def verif(self):
-        if self.__offeset < 0 and self.__offset > 2*self.__n - 3:
+        if self.__offset < 0 and self.__offset > 2*self.__n - 3:
             return False
         return True
     def chiffrer(self,message):
-        if self.verif() == True:
-            message = list(message)
-            
-        else:
+        if self.verif() == False:
             return self.__erreur
+
+        #préparation du message
+        message = message.replace(" ", "").upper()
+
+        #cycle de vague
+        longueur_cycle = 2 * self.__n - 2
+
+        #création des lignes
+        lignes = []
+        for i in range(self.__n):
+            lignes.append([])
+
+        #choix de la ligne de départ
+        if self.__offset < self.__n:
+            ligne_actuelle = self.__offset
+            direction = 1 #descente
+        else:
+            ligne_actuelle = longueur_cycle - self.__offset
+            direction = -1 #remontée
+
+        #remplissage d'une ligne
+        for i in range(len(message)):
+            lignes[ligne_actuelle].append(message[i])
+
+            #chagement de direction si on touche les bords
+            if ligne_actuelle == 0:
+                direction = 1
+            elif ligne_actuelle == self.__n - 1:
+                direction = -1
+            
+            ligne_actuelle += direction
+
+        #collage des lignes
+        message_chiffrer = []
+        for i in range(len(lignes)):
+            for j in range(len(lignes[i])):
+                message_chiffrer.append(lignes[i][j])
+
+        return ''.join(message_chiffrer)
+        
+chiffreur2 = Algo2(n=6, offset=4)
+print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
