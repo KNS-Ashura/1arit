@@ -121,7 +121,7 @@ class Algo2:
         message = message.replace(" ", "").upper()
 
         #cycle de vague
-        longueur_cycle = 2 * self.__n - 2
+        cycle = 2 * self.__n - 2
 
         #création des lignes
         lignes = []
@@ -133,7 +133,7 @@ class Algo2:
             ligne_actuelle = self.__offset
             direction = 1 #descente
         else:
-            ligne_actuelle = longueur_cycle - self.__offset
+            ligne_actuelle = cycle - self.__offset
             direction = -1 #remontée
 
         #remplissage d'une ligne
