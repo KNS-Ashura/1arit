@@ -118,7 +118,8 @@ class Algo2:
             return self.__error
 
         #préparation du message
-        message = message.replace(" ", "").upper()
+        message = message.replace(" ", "")
+        message = message.upper()
 
         #cycle de vague
         cycle = 2 * self.__n - 2
@@ -158,3 +159,4 @@ class Algo2:
         
 chiffreur2 = Algo2(n=6, offset=4)
 print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
+# on est censé obtenir "ETTPUVPOYHUYOEUFAAEODYREIDTKUNDDWKNABORIIADRM"
