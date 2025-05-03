@@ -122,6 +122,17 @@ class Algo2:
             tableau.append([0] * j)
         return tableau
 
+    #fonction principales
+    def vagues(self,tableau):
+        for i in range(len(tableau)):
+            for j in range(len(tableau[i])):
+                if tableau[i][j] == 0 :
+                    print(" ", end=" ")
+                else :
+                    print(tableau[i][j], end=" ")
+            print("\n")
+                    
+                    
     def chiffrer(self, message):
         
         #mise en forme du message pour qu'il n'y ait pas d'espaces et que tout soit en majuscule 
@@ -148,6 +159,9 @@ class Algo2:
                 direction = -1
             ligne_actuelle += direction
             
+        #appelle de la fonction d'affichage
+        self.vagues(tableau)
+            
         #recuperation du message chiffrer en parcourant les lignes
         message_chiffrer = []
         for i in range(len(tableau)) :
@@ -158,7 +172,7 @@ class Algo2:
         return message_chiffrer
                 
             
-        
+    
 
             
                 
