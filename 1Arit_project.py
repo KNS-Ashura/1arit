@@ -103,72 +103,67 @@ class Algo1:
 
 
 class Algo2:
-    def __init__(self, n, offset, len):
+    def __init__(self, n, offset):
         self.__n = n
         self.__offset = offset
         self.__error = f"Erreur : l'offset doit être compris entre 0 et {2*self.__n - 3}"
-        self.__message_len = len
-        self.__lignes = []  # ajout pour stocker les lignes
+
+
+    #fonctions intermaidiaires
 
     def verif(self):
         if self.__offset < 0 or self.__offset > 2*self.__n - 3:
             return False
         return True
     
+    def creer_tableau(self, i, j):
+        tableau = []
+        for ligne in range(i):
+            tableau.append([0] * j)
+        return tableau
+
     def chiffrer(self, message):
-        if not self.verif():
-            return self.__error
+        
+        #mise en forme du message pour qu'il n'y ait pas d'espaces et que tout soit en majuscule 
+        # + transformation en liste
 
-        message = message.replace(" ", "").upper()
-        self.__message_len = len(message)
-
-        cycle = 2 * self.__n - 2
-        self.__lignes = [[] for _ in range(self.__n)]
-
-        if self.__offset < self.__n:
-            ligne_actuelle = self.__offset
-            direction = 1
-        else:
-            ligne_actuelle = cycle - self.__offset
-            direction = -1
-
+        message = list(message)
+        
+        
+        if self.verif() is False :
+            return self.__error     
+        
+        tableau = self.creer_tableau(self.__n, len(message))
+        
+        ligne_actuelle = self.__offset
+        
+        direction = 1
+        
+        #création du tableau
         for i in range(len(message)):
-            self.__lignes[ligne_actuelle].append((i, message[i]))  # stocker position + lettre
-
+            tableau[ligne_actuelle][i] = message[i]
             if ligne_actuelle == 0:
                 direction = 1
-            elif ligne_actuelle == self.__n - 1:
+            if ligne_actuelle == self.__n - 1:
                 direction = -1
-            
             ligne_actuelle += direction
-
+            
+        #recuperation du message chiffrer en parcourant les lignes
         message_chiffrer = []
-        for ligne in self.__lignes:
-            for pos, lettre in ligne:
-                message_chiffrer.append(lettre)
-
-        return ''.join(message_chiffrer)
-    
-    
-    
-    def vagues(self):
-        # Initialiser grille d'espaces
-        display_board = [[' ' for _ in range(self.__message_len)] for _ in range(self.__n)]
-
-        # Remplir grille avec les lettres aux bonnes positions
-        for i in range(self.__n):
-            for pos, lettre in self.__lignes[i]:
-                display_board[i][pos] = lettre
-
-        # Affichage
-        for ligne in display_board:
-            print(''.join(ligne))
+        for i in range(len(tableau)) :
+            for j in range(len(tableau[i])):
+                if tableau[i][j] != 0:
+                    message_chiffrer.append(tableau[i][j])
+        
+        return message_chiffrer
+                
+            
+        
 
             
                 
         
         
-chiffreur2 = Algo2(n=6, offset=4, len=0)
-res = chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND")
-print(res)
-chiffreur2.vagues()
+chiffreur2 = Algo2(n=6, offset=4)
+print(chiffreur2.chiffrer("DIDYOUEVERWAKEUPTOFINDADAYTHATBROKEUPYOURMIND"))
+# on doit obtenir "ETTPUVPOYHUYOEUFAAEODYREIDTKUNDDWKNABORIIADRM"
