@@ -106,16 +106,16 @@ class Algo2:
     def __init__ (self, n, offset):
         self.__n = n
         self.__offset = offset
-        self.__error_msg = f"Erreur : l'offset doit être compris entre 0 et {2*self.__n - 3}"
+        self.__error = f"Erreur : l'offset doit être compris entre 0 et {2*self.__n - 3}"
 
     #vérification de l'offset pour quand on essaye avec un n et un offest différent du sujet
     def verif(self):
-        if self.__offset < 0 and self.__offset > 2*self.__n - 3:
+        if self.__offset < 0 or self.__offset > 2*self.__n - 3:
             return False
         return True
     def chiffrer(self,message):
         if self.verif() == False:
-            return self.__erreur
+            return self.__error
 
         #préparation du message
         message = message.replace(" ", "").upper()
