@@ -18,3 +18,9 @@ Les deux algorithmes sont implémentés sous forme de classes (`Algo1` et `Algo2
 Exemple d'utilisation :
 1. Instanciez l'objet avec les paramètres requis (les clés pour `Algo1`, `n` et `offset` pour `Algo2`).
 2. Utilisez les méthodes `.chiffrer("VOTREMESSAGE")` et `.dechiffrer("VOTREMESSAGE")` pour effectuer les opérations.
+
+
+## Auteurs
+
+- **KNS-Ashura** - [GitHub](https://github.com/KNS-Ashura)
+- **Louis27940** - [GitHub](https://github.com/Louis27940)
